@@ -1,6 +1,5 @@
 # Import the necessary modules
 import re
-
 from tkinter import *
 import os
 import io
@@ -222,7 +221,6 @@ heading_button.grid(row=3, column=5)
 notice_button.grid(row=3, column=6)
 
 # set the size of the buttons
-
 size = 11
 
 bold_button.config(width=size, bd=5)
@@ -252,6 +250,7 @@ def update_html_page():
     end_index = editor.index("end")
     text = editor.get(start_index, end_index)
     # Replace line ending characters with HTML line break tags
+    text = text.replace("]\n", "]").replace("\n[", "[")
     text = text.replace("\n", "<br>")
     # Replace BBcode tags with HTML tags
     text = text.replace("[b]", "<strong>")
