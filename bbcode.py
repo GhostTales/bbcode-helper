@@ -1,6 +1,11 @@
 # Import the necessary modules
+import re
+
 from tkinter import *
+import os
+import io
 import webbrowser
+from threading import Timer
 
 # Create the main window
 root = Tk()
@@ -10,7 +15,7 @@ root.title("osu! BBCode editor")
 editor = Text(root)
 editor.pack()
 
-icon = PhotoImage(file="icons/osu! bbcode editor.png")
+icon = PhotoImage(file="osu! bbcode editor.png")
 # Set the icon of the root window
 root.iconphoto(False, icon)
 
@@ -96,7 +101,7 @@ def profile():
     editor.mark_set("insert", "%d.%d" % (int(index.split(".")[0]), int(index.split(".")[1]) + len("[profile=USERID]")))  # move cursor up one line
 def list():
     index = editor.index(INSERT)
-    editor.insert(index, "[list=TYPE]\n[*]\n[*]\n[/list]")
+    editor.insert(index, "[list]\n[*]\n[*]\n[/list]")
     editor.mark_set("insert", "%d.0" % (int(index.split(".")[0]) + 1))  # move cursor up one line
     current_line = editor.index("insert linestart")
     editor.mark_set("insert", f"{current_line} lineend")
@@ -106,15 +111,15 @@ def email():
     editor.mark_set("insert", "%d.%d" % (int(index.split(".")[0]), int(index.split(".")[1]) + len("[email=ADDRESS]")))  # move cursor up one line
 def images():
     index = editor.index(INSERT)
-    editor.insert(index, "[img] ADDRESS [/img]")
+    editor.insert(index, "[img]ADDRESS[/img]")
     editor.mark_set("insert", "%d.%d" % (int(index.split(".")[0]), int(index.split(".")[1]) + len("[img]")))  # move cursor up one line
 def youtube():
     index = editor.index(INSERT)
-    editor.insert(index, "[youtube] VIDEO_ID [/youtube]")
+    editor.insert(index, "[youtube]VIDEO_ID[/youtube]")
     editor.mark_set("insert", "%d.%d" % (int(index.split(".")[0]), int(index.split(".")[1]) + len("[youtube]")))  # move cursor up one line
 def audio():
     index = editor.index(INSERT)
-    editor.insert(index, "[audio] URL [/audio]")
+    editor.insert(index, "[audio]URL[/audio]")
     editor.mark_set("insert", "%d.%d" % (int(index.split(".")[0]), int(index.split(".")[1]) + len("[audio]")))  # move cursor up one line
 def heading():
     index = editor.index(INSERT)
@@ -241,6 +246,69 @@ youtube_button.config(width=size, bd=5)
 audio_button.config(width=size, bd=5)
 heading_button.config(width=size, bd=5)
 notice_button.config(width=size, bd=5)
+
+def update_html_page():
+    start_index = editor.index("1.0")
+    end_index = editor.index("end")
+    text = editor.get(start_index, end_index)
+    # Replace line ending characters with HTML line break tags
+    text = text.replace("\n", "<br>")
+    # Replace BBcode tags with HTML tags
+    text = text.replace("[b]", "<strong>")
+    text = text.replace("[/b]", "</strong>")# done
+    text = text.replace("[i]", "<i>")
+    text = text.replace("[/i]", "</i>")# done
+    text = text.replace("[u]", "<u>")
+    text = text.replace("[/u]", "</u>")# done
+    text = text.replace("[strike]", "<s>")
+    text = text.replace("[/strike]", "</s>")# done
+    text = re.sub(r"\[color=(.*?)](.*?)\[/color]", r"<font color=\1>\2</font>", text)
+    text = re.sub(r"\[size=(.*?)](.*?)\[/size]", r"<font size=\1>\2</font>", text)
+    text = text.replace("[spoilerbox]", "<details> <summary> Spoiler </summary>")
+    text = text.replace("[/spoilerbox]", "</details>") # done
+    text = text.replace("[centre]", "<center>")
+    text = text.replace("[/centre]", "</center>") # done
+    text = text.replace("[list]", "<ul>")
+    text = text.replace("[*]", "<li>")
+    text = text.replace("[/list]", "</ul>") # done
+    text = text.replace("[quote]", "<blockquote>")
+    text = text.replace("[/quote]", "</blockquote>") # done
+    text = text.replace("[code]", "<pre><code>")
+    text = text.replace("[/code]", "</code></pre>") # done
+    text = text.replace("[heading]", "<h1>")
+    text = text.replace("[/heading]", "</h1>") # done
+    text = text.replace("[notice]", "<div class='notice'>")
+    text = text.replace("[/notice]", "</div>") # done
+    text = re.sub(r"\[box=(.*?)]", r"<details> <summary> \1 </summary>", text)
+    text = text.replace("[/box]", "</details>")  # done
+    text = re.sub(r"\[url=(.*?)](.*?)\[/url]", r"<a href='\1'>\2</a>", text) # done
+    text = re.sub(r"\[profile=(.*?)](.*?)\[/profile]", r"<a href=https://osu.ppy.sh/users/\1>\2</a>", text) # done
+    text = re.sub(r"\[email=(.*?)](.*?)\[/email]", r"<a href='mailto:\1'>\2</a>", text) # done
+    text = re.sub(r"\[img](.*?)\[/img]", r"<img src='\1>'</img>", text)  # done
+    text = re.sub(r"\[youtube](.*?)\[/youtube]", r"<iframe src=https://www.youtube.com/watch?v=\1></iframe>", text)  # done
+    text = re.sub(r"\[audio](.*?)\[/audio]", r"<audio src=\1></audio>", text)  # done
+    text = re.sub(r"\[spoiler](.*?)\[/spoiler]", r"<span style='background-color: #D9A7BC;'>\1</span>", text)
+
+    html_page = "<html> <head> <style> body { background-color: #392E33; color: #D9A7BC; } " \
+                ".notice { border: 2px solid #715C64; background-color: #2A2226; padding: 20px; border-radius: 5px; max-width: 950px;} " \
+                "a { color: #ADD8E6; } </style>" \
+                f" </head> <body> {text} </body> </html>"
+
+    # Create a directory for the HTML page
+    os.makedirs('html_pages', exist_ok=True)
+
+    # Write the HTML code to a file
+    with io.open('html_pages/page.html', 'w', encoding='utf-8') as f:
+        f.write(html_page)
+
+    # Schedule the function to be executed again in 1 second
+    Timer(1, update_html_page).start()
+
+# Start the timer
+update_html_page()
+
+# open the html file in default web browser
+webbrowser.open('file://' + os.path.realpath("html_pages/page.html"))
 
 # Start the main event loop
 root.mainloop()
