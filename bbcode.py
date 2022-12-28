@@ -265,8 +265,8 @@ def update_html_page():
     text = re.sub(r"\[size=(.*?)](.*?)\[/size]", r"<font size=\1>\2</font>", text)
     text = text.replace("[spoilerbox]", "<details> <summary> Spoiler </summary>")
     text = text.replace("[/spoilerbox]", "</details>") # done
-    text = text.replace("[centre]", "<center>")
-    text = text.replace("[/centre]", "</center>") # done
+    text = text.replace("[centre]", "<div style='text-align: center; left: 475px;'>")
+    text = text.replace("[/centre]", "</div>") # done
     text = text.replace("[list]", "<ul>")
     text = text.replace("[*]", "<li>")
     text = text.replace("[/list]", "</ul>") # done
@@ -284,7 +284,7 @@ def update_html_page():
     text = re.sub(r"\[profile=(.*?)](.*?)\[/profile]", r"<a href=https://osu.ppy.sh/users/\1>\2</a>", text) # done
     text = re.sub(r"\[email=(.*?)](.*?)\[/email]", r"<a href='mailto:\1'>\2</a>", text) # done
     text = re.sub(r"\[img](.*?)\[/img]", r"<img src='\1>'</img>", text)  # done
-    text = re.sub(r"\[youtube](.*?)\[/youtube]", r"<iframe src=https://www.youtube.com/watch?v=\1></iframe>", text)  # done
+    text = re.sub(r"\[youtube](.*?)\[/youtube]", r"<div><iframe width='560' height='315' src=https://www.youtube.com/embed/\1></iframe></div>", text)  # done
     text = re.sub(r"\[audio](.*?)\[/audio]", r"<audio src=\1></audio>", text)  # done
     text = re.sub(r"\[spoiler](.*?)\[/spoiler]", r"<span style='background-color: #D9A7BC;'>\1</span>", text)
 
