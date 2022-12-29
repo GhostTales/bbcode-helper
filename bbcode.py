@@ -259,13 +259,13 @@ def update_html_page():
     text = text.replace("[/i]", "</i>")# done
     text = text.replace("[u]", "<u>")
     text = text.replace("[/u]", "</u>")# done
-    text = text.replace("[strike]", "<s>")
-    text = text.replace("[/strike]", "</s>")# done
+    text = text.replace("[strike]", "<br><s>")
+    text = text.replace("[/strike]", "</s><br>")# done
     text = re.sub(r"\[color=(.*?)](.*?)\[/color]", r"<font color=\1>\2</font>", text)
     text = re.sub(r"\[size=(.*?)](.*?)\[/size]", r"<font size=\1>\2</font>", text)
     text = text.replace("[spoilerbox]", "<details> <summary> Spoiler </summary>")
     text = text.replace("[/spoilerbox]", "</details>") # done
-    text = text.replace("[centre]", "<div style='text-align: center; left: 475px;'>")
+    text = text.replace("[centre]", "<div style='text-align: center; left: 450px;'>")
     text = text.replace("[/centre]", "</div>") # done
     text = text.replace("[list]", "<ul>")
     text = text.replace("[*]", "<li>")
@@ -278,19 +278,19 @@ def update_html_page():
     text = text.replace("[/heading]", "</h1>") # done
     text = text.replace("[notice]", "<div class='notice'>")
     text = text.replace("[/notice]", "</div>") # done
-    text = re.sub(r"\[box=(.*?)]", r"<details> <summary> \1 </summary>", text)
-    text = text.replace("[/box]", "</details>")  # done
-    text = re.sub(r"\[url=(.*?)](.*?)\[/url]", r"<a href='\1'>\2</a>", text) # done
-    text = re.sub(r"\[profile=(.*?)](.*?)\[/profile]", r"<a href=https://osu.ppy.sh/users/\1>\2</a>", text) # done
-    text = re.sub(r"\[email=(.*?)](.*?)\[/email]", r"<a href='mailto:\1'>\2</a>", text) # done
-    text = re.sub(r"\[img](.*?)\[/img]", r"<img src='\1>'</img>", text)  # done
+    text = re.sub(r"\[box=(.*?)]", r"<details> <summary> \1 </summary> <br> <div class=""indent"">", text)
+    text = text.replace("[/box]", "</div> </details>")  # done
+    text = re.sub(r"\[url=(.*?)](.*?)\[/url]", r"<br><a href='\1'>\2</a>", text) # done
+    text = re.sub(r"\[profile=(.*?)](.*?)\[/profile]", r"<br><a href=https://osu.ppy.sh/users/\1>\2</a>", text) # done
+    text = re.sub(r"\[email=(.*?)](.*?)\[/email]", r"<br><a href='mailto:\1'>\2</a>", text) # done
+    text = re.sub(r"\[img](.*?)\[/img]", r"<br><img src='\1>'</img>", text)  # done
     text = re.sub(r"\[youtube](.*?)\[/youtube]", r"<div><iframe width='560' height='315' src=https://www.youtube.com/embed/\1></iframe></div>", text)  # done
     text = re.sub(r"\[audio](.*?)\[/audio]", r"<audio src=\1></audio>", text)  # done
     text = re.sub(r"\[spoiler](.*?)\[/spoiler]", r"<span style='background-color: #D9A7BC;'>\1</span>", text)
 
-    html_page = "<html> <head> <style> body { background-color: #392E33; color: #D9A7BC; } " \
-                ".notice { border: 2px solid #715C64; background-color: #2A2226; padding: 20px; border-radius: 5px; max-width: 950px;} " \
-                "a { color: #ADD8E6; } </style>" \
+    html_page = "<html> <head> <style> body { background-color: #392E33; color: #D9A7BC; font-size: 15px;} " \
+                ".notice { border: 2px solid #715C64; background-color: #2A2226; padding: 18px; border-radius: 5px; max-width: 900px;} " \
+                "a { color: #ADD8E6; } .indent { padding-left: 20px; } </style>" \
                 f" </head> <body> {text} </body> </html>"
 
     # Create a directory for the HTML page
