@@ -9,6 +9,7 @@ from threading import Timer
 # Create the main window
 root = Tk()
 root.title("osu! BBCode editor")
+root.keepclipboard = True
 
 # Create a text editor widget
 editor = Text(root)
@@ -18,11 +19,12 @@ icon = PhotoImage(file="osu! bbcode editor.png")
 # Set the icon of the root window
 root.iconphoto(False, icon)
 
-editor.configure(width=106)
-editor.configure(wrap="none")
-editor.configure(insertbackground="white")
+editor.config(width=106)
+editor.config(wrap="none")
+editor.config(insertbackground="white")
 editor.config(bg="#333333", fg="white")
 editor.config(padx=5, pady=5)
+editor.config(font=("Vayu Sans", 11))
 
 index = editor.index(INSERT)
 editor.insert(index, "# to scroll in this editor use scroll wheel for up/down\n# and shift + scroll wheel for left/right\n# help: ")
@@ -174,27 +176,27 @@ editor.bind("<Key>", highlight_brackets)
 editor.bind("<Button>", highlight_brackets)
 
 # Create buttons for applying function formatting
-bold_button = Button(root, text="Bold", command=bold, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-italic_button = Button(root, text="Italic", command=italic, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-underline_button = Button(root, text="Underline", command=underline, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-strikethrough_button = Button(root, text="Strike", command=strikethrough, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-color_button = Button(root, text="Colour", command=colour, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-font_size_button = Button(root, text="Font Size", command=font_size, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-spoiler_button = Button(root, text="Spoiler", command=spoiler, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-box_button = Button(root, text="Box", command=box, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-spoilerbox_button = Button(root, text="Spoilerbox", command=spoilerbox, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-quote_button = Button(root, text="Quote", command=quote, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-code_block_button = Button(root, text="Code", command=code, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-center_button = Button(root, text="Center", command=centre, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-url_button = Button(root, text="URL", command=url, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-profile_button = Button(root, text="Profile", command=profile, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-list_button = Button(root, text="List", command=list, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-email_button = Button(root, text="Email", command=email, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-images_button = Button(root, text="Images", command=images, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-youtube_button = Button(root, text="YouTube", command=youtube, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-audio_button = Button(root, text="Audio", command=audio, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-heading_button = Button(root, text="Heading", command=heading, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
-notice_button = Button(root, text="Notice", command=notice, bg="#333", fg="#eee", font=("Arial", 12, "bold"))
+bold_button = Button(root, text="Bold", command=bold, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+italic_button = Button(root, text="Italic", command=italic, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+underline_button = Button(root, text="Underline", command=underline, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+strikethrough_button = Button(root, text="Strike", command=strikethrough, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+color_button = Button(root, text="Colour", command=colour, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+font_size_button = Button(root, text="Font Size", command=font_size, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+spoiler_button = Button(root, text="Spoiler", command=spoiler, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+box_button = Button(root, text="Box", command=box, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+spoilerbox_button = Button(root, text="Spoilerbox", command=spoilerbox, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+quote_button = Button(root, text="Quote", command=quote, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+code_block_button = Button(root, text="Code", command=code, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+center_button = Button(root, text="Center", command=centre, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+url_button = Button(root, text="URL", command=url, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+profile_button = Button(root, text="Profile", command=profile, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+list_button = Button(root, text="List", command=list, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+email_button = Button(root, text="Email", command=email, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+images_button = Button(root, text="Images", command=images, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+youtube_button = Button(root, text="YouTube", command=youtube, bg="#333", fg="#eee", font=("Vayu Sansl", 12, "bold"))
+audio_button = Button(root, text="Audio", command=audio, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+heading_button = Button(root, text="Heading", command=heading, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
+notice_button = Button(root, text="Notice", command=notice, bg="#333", fg="#eee", font=("Vayu Sans", 12, "bold"))
 
 # pack the buttons into a grid
 editor.grid(row=0, column=0, columnspan=7)
@@ -249,9 +251,6 @@ def update_html_page():
     start_index = editor.index("1.0")
     end_index = editor.index("end")
     text = editor.get(start_index, end_index)
-    # Replace line ending characters with HTML line break tags
-    text = text.replace("]\n", "]").replace("\n[", "[")
-    text = text.replace("\n", "<br>")
     # Replace BBcode tags with HTML tags
     text = text.replace("[b]", "<strong>")
     text = text.replace("[/b]", "</strong>")# done
@@ -259,13 +258,13 @@ def update_html_page():
     text = text.replace("[/i]", "</i>")# done
     text = text.replace("[u]", "<u>")
     text = text.replace("[/u]", "</u>")# done
-    text = text.replace("[strike]", "<br><s>")
-    text = text.replace("[/strike]", "</s><br>")# done
+    text = text.replace("[strike]", "<s>")
+    text = text.replace("[/strike]", "</s>")# done
     text = re.sub(r"\[color=(.*?)](.*?)\[/color]", r"<font color=\1>\2</font>", text)
-    text = re.sub(r"\[size=(.*?)](.*?)\[/size]", r"<font size=\1>\2</font>", text)
-    text = text.replace("[spoilerbox]", "<details> <summary> Spoiler </summary>")
+    text = re.sub(r"\[size=(.*?)](.*?)\[/size]", r"<span class='font-\1'><span style='color: inherit;'>\2</span></span>", text)
+    text = text.replace("[spoilerbox]", "<details><summary>Spoiler</summary>")
     text = text.replace("[/spoilerbox]", "</details>") # done
-    text = text.replace("[centre]", "<div style='text-align: center; left: 450px;'>")
+    text = text.replace("[centre]", "<div style='text-align: center; left: 600px;'>")
     text = text.replace("[/centre]", "</div>") # done
     text = text.replace("[list]", "<ul>")
     text = text.replace("[*]", "<li>")
@@ -278,20 +277,34 @@ def update_html_page():
     text = text.replace("[/heading]", "</h1>") # done
     text = text.replace("[notice]", "<div class='notice'>")
     text = text.replace("[/notice]", "</div>") # done
-    text = re.sub(r"\[box=(.*?)]", r"<details> <summary> \1 </summary> <br> <div class=""indent"">", text)
-    text = text.replace("[/box]", "</div> </details>")  # done
-    text = re.sub(r"\[url=(.*?)](.*?)\[/url]", r"<br><a href='\1'>\2</a>", text) # done
-    text = re.sub(r"\[profile=(.*?)](.*?)\[/profile]", r"<br><a href=https://osu.ppy.sh/users/\1>\2</a>", text) # done
-    text = re.sub(r"\[email=(.*?)](.*?)\[/email]", r"<br><a href='mailto:\1'>\2</a>", text) # done
-    text = re.sub(r"\[img](.*?)\[/img]", r"<br><img src='\1>'</img>", text)  # done
+    text = re.sub(r"\[box=(.*?)]", r"<details><summary>\1</summary><div class=""indent"">", text)
+    text = text.replace("[/box]", "</div></details>")  # done
+    text = re.sub(r"\[url=(.*?)](.*?)\[/url]", r"<a href='\1'>\2</a>", text) # done
+    text = re.sub(r"\[profile=(.*?)](.*?)\[/profile]", r"<a href=https://osu.ppy.sh/users/\1><strong>\2</strong></a>", text) # done
+    text = re.sub(r"\[email=(.*?)](.*?)\[/email]", r"<a href='mailto:\1'>\2</a>", text) # done
+    text = re.sub(r"\[img](.*?)\[/img]", r"<img src='\1'></img>", text)  # done
     text = re.sub(r"\[youtube](.*?)\[/youtube]", r"<div><iframe width='560' height='315' src=https://www.youtube.com/embed/\1></iframe></div>", text)  # done
     text = re.sub(r"\[audio](.*?)\[/audio]", r"<audio src=\1></audio>", text)  # done
     text = re.sub(r"\[spoiler](.*?)\[/spoiler]", r"<span style='background-color: #D9A7BC;'>\1</span>", text)
+    text = re.sub(r'^(?!\s*$)([^<>].*)$', r'<p>\1</p>', text, flags=re.MULTILINE) ########fix
+    text = text.replace("<p>ㅤ</p>" and "<p>\n</p>", "")
 
-    html_page = "<html> <head> <style> body { background-color: #392E33; color: #D9A7BC; font-size: 15px;} " \
-                ".notice { border: 2px solid #715C64; background-color: #2A2226; padding: 18px; border-radius: 5px; max-width: 900px;} " \
-                "a { color: #ADD8E6; } .indent { padding-left: 20px; } </style>" \
-                f" </head> <body> {text} </body> </html>"
+    html_page = "<html><head><style> @font-face {font-family: 'Vayu Sans'; src: url('VayuSans-Bold/VayuSans-Bold.ttf');}"\
+                "* { font-family: 'Vayu Sans'; }" \
+                "body {white-space: pre-wrap; background-color: #392E33; color: #D9A7BC; font-size: 20px;} " \
+                ".notice {border: 2px solid #715C64; background-color: #2A2226; padding: 18px; border-radius: 5px; max-width: 1200px;} " \
+                "a {color: #ADD8E6; text-decoration: none;} " \
+                ".indent {margin: 0; padding-left: 20px;} " \
+                "p {color: #f0dbe4; margin: 0; line-height: 0px} " \
+                "ul {margin: 0;} " \
+                "details, summary { margin: 0;}" \
+                ".inherit-styles {font-size: inherit; color: inherit; margin: inherit;} " \
+                ".font-50 {font-size: 10;}" \
+                ".font-85 {font-size: 17;}"\
+                ".font-100 {font-size: 20;}" \
+                ".font-150 {font-size: 30;}" \
+                "strong {line-height: 20px;} i {line-height: 20px;} u {line-height: 20px;} s {line-height: 20px;}</style>" \
+                f" </head><body><br>{text}</body></html>"
 
     # Create a directory for the HTML page
     os.makedirs('html_pages', exist_ok=True)
@@ -299,6 +312,8 @@ def update_html_page():
     # Write the HTML code to a file
     with io.open('html_pages/page.html', 'w', encoding='utf-8') as f:
         f.write(html_page)
+
+
 
     # Schedule the function to be executed again in 1 second
     Timer(1, update_html_page).start()
@@ -311,3 +326,4 @@ webbrowser.open('file://' + os.path.realpath("html_pages/page.html"))
 
 # Start the main event loop
 root.mainloop()
+
