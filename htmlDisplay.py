@@ -3,7 +3,6 @@ import threading
 from pathlib import Path
 import webview
 
-
 def display_html(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:  # Add encoding='utf-8'
         return file.read()
@@ -40,13 +39,13 @@ def watch_file(file_path, window):
             window.evaluate_js(f"window.scrollTo(0, {scroll_position})")
             time.sleep(0.2)
 
-        # Wait for the file contents to change, checking every 3 seconds
+        # Wait for the file contents to change, checking every 0.25 seconds
         while True:
             new_html_content = display_html(file_path)
             if new_html_content != html_content:
                 html_content = new_html_content
                 break
-            time.sleep(2)
+            time.sleep(0.25)
 
 
 def create_window(file_path):
@@ -56,5 +55,6 @@ def create_window(file_path):
     watch_thread.start()
     webview.start()
 
-file_path = "html_pages/page.html"
+file_path = "page.html"
 create_window(file_path)
+
