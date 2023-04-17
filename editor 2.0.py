@@ -232,7 +232,7 @@ class editor(customtkinter.CTk):
 
         # Run the exe in a separate thread to avoid interference with the tkinter window
         import threading
-        threading.Thread(target=lambda: os.system("htmlDisplay.exe")).start()
+        threading.Thread(target=lambda: os.system("RunDisplay.vbs")).start()
 
 
 if __name__ == "__main__":
