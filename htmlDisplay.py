@@ -57,4 +57,3 @@ def create_window(file_path):
 
 file_path = "page.html"
 create_window(file_path)
-
