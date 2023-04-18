@@ -1,4 +1,4 @@
-# bbcode-helper
+# bbcode-editor
 
 This is a program designed to help people make BBcode easy.
 The code was origionally made for a game called osu! as for the custom bbcode built in.
