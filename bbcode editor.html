@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		body {
+			background-color: #1c1c1c;
+			color: #fff;
+			font-family: Arial, sans-serif;
+		}
+		textarea#user-input {
+			width: 100%;
+			height: 300px;
+			resize: none;
+			float: left; /* added to float the element to the right */
+			white-space: nowrap; /* added to prevent word wrap */
+		}
+		iframe#display {
+			width: 100%;
+			height: 900px;
+			float: right; /* added to float the element to the right */
+			border: none; /* added to remove the border */
+			
+		}
+	</style>
+</head>
+<body>
+	<textarea id="user-input"></textarea> <!-- added a new textarea element with an id of "user-input" -->
+	<iframe id="display"></iframe> <!-- added a new iframe element with an id of "display" -->
+	<script>
+    // Get the textarea element with an id of "user-input"
+	const userInput = document.getElementById('user-input');
+	// Get the iframe element with an id of "display"
+	const display = document.getElementById('display');
+	// Add an event listener to the "user-input" textarea that updates the "display" iframe with the input value
+
+	// Define a function that will parse the text and update the display
+	function update_html_page() {
+  		let text = userInput.value
+
+		// Replace BBcode tags with HTML tags
+  		text = text.replace(/!bbcode /g, "");
+  		text = text.replace(/\[b]/g, "<strong>");
+  		text = text.replace(/\[\/b]/g, "</strong>");
+  		text = text.replace(/\[i]/g, "<i>");
+  		text = text.replace(/\[\/i]/g, "</i>");
+  		text = text.replace(/\[u]/g, "<u>");
+  		text = text.replace(/\[\/u]/g, "</u>");
+  		text = text.replace(/\[strike]/g, "<s>");
+  		text = text.replace(/\[\/strike]/g, "</s>");
+  		text = text.replace(/\[color=(.*?)](.*?)\[\/color]/g,"<font color=$1>$2</font>");
+  		text = text.replace(/\[size=(.*?)](.*?)\[\/size]/g,"<span class='font-$1'><span style='color: inherit;'>$2</span></span>");
+  		text = text.replace(/\n?\[spoilerbox]/g, "<details><summary>Spoiler</summary>");
+  		text = text.replace(/\n?\[\/spoilerbox]/g, "</details>");
+  		text = text.replace(/\n?\[centre]/g,"<div style='text-align: center; left: 600px;'>");
+  		text = text.replace(/\n?\[\/centre]/g, "</div>");
+  		text = text.replace(/[ \n]?\[list]/g, "<ul>");
+  		text = text.replace(/[ \n]?\[\*]/g, "<li>");
+  		text = text.replace(/[ \n]?\[\/list]/g, "</ul>");
+  		text = text.replace(/\n?\[quote]/g, "<blockquote>");
+  		text = text.replace(/\[\/quote]/g, "</blockquote>");
+  		text = text.replace(/\n?\[code]/g, "<pre><code>");
+  		text = text.replace(/\[\/code]/g, "</code></pre>");
+  		text = text.replace(/\n?\[heading]/g, "<h1>");
+  		text = text.replace(/\[\/heading]/g, "</h1>");
+  		text = text.replace(/\n?\[notice][ \n]/g, "<div class='notice'>");
+  		text = text.replace(/\n?\[\/notice]/g, "</div>");
+  		text = text.replace(/[ \n]?\[box=(.*?)]/g,"<details><summary>$1</summary><div class='indent'><br style='line-height: 10px;'>");
+  		text = text.replace(/[ \n]?\[\/box]/g, "</div></details>");
+  		text = text.replace(/\[url=(.*?)](.*?)\[\/url]/g,"<a href='$1'>$2</a>");
+  		text = text.replace(/\[profile=(.*?)](.*?)\[\/profile]/g,"<a href=https://osu.ppy.sh/users/$1><strong>$2</strong></a>");
+  		text = text.replace(/\[email=(.*?)](.*?)\[\/email]/g,"<a href='mailto:$1'>$2</a>");
+  		text = text.replace(/\[img](.*?)\[\/img]/g, "<img src='$1'></img>");
+  		text = text.replace(/\[youtube](.*?)\[\/youtube]/g,"<div><iframe width='560' height='315' src=https://www.youtube.com/embed/$1></iframe></div>");
+  		text = text.replace(/\[audio](.*?)\[\/audio]/g,"<audio src=$1></audio>");
+  		text = text.replace(/\[spoiler](.*?)\[\/spoiler]/g,"<span style='background-color: #D9A7BC;'>$1</span>");
+  		text = text.replace(/\n?^(?!\s*$)([^<>].*)$/gm,"<p>$1</p>");
+  		text = text.replace(/<p>ㅤ<\/p>|<p>\n<\/p>/g, "");
+
+		const html_page = "<html><head><style> @font-face {font-family: 'Vayu Sans'; src: url('VayuSans-Bold/VayuSans-Bold.ttf');}" +"* { font-family: 'Vayu Sans'; }" +"body {white-space: pre-wrap; background-color: #392E33; color: #D9A7BC; font-size: 20px;} " +".notice {border: 2px solid #715C64; background-color: #2A2226; padding: 18px; border-radius: 5px; max-width: 1200px;} " +"a {color: #ADD8E6; text-decoration: none;} " +".indent {margin: 0; padding-left: 20px;} " +"p {color: #f0dbe4; margin: 0; line-height: 1.2} " +"ul {margin: 0;} " +"details, summary { margin: 0;}" +".inherit-styles {font-size: inherit; color: inherit; margin: inherit;} " +".font-50 {font-size: 10;}" +".font-85 {font-size: 17;}" +".font-100 {font-size: 20;}" +".font-150 {font-size: 30;}" +"strong {line-height: 20px;} i {line-height: 20px;} u {line-height: 20px;} s {line-height: 20px;}</style>" +` </head><body>${text}</body></html>`;
+	
+  		// Update the "display" iframe with the parsed text
+  		display.srcdoc = html_page;
+	}
+
+	// Add an event listener to the "user-input" textarea that updates the "display" iframe with the input value
+	userInput.addEventListener('input', update_html_page);
+
+// Define an array of button names and outputs
+	const buttonData = [
+	  { name: 'Bold'		, output: '[b][/b]'},
+	  { name: 'Italic'		, output: '[i][/i]'},
+	  { name: 'Underline'	, output: '[u][/u]'},
+	  { name: 'Strike'		, output: '[strike][/strike]'},
+	  { name: 'Color'		, output: '[color=HEXCODE][/color]'},
+	  { name: 'Font Size'	, output: 'size=NUMBER (50,85,100,150)][/size]'},
+	  { name: 'Spoiler'		, output: '[spoiler][/spoiler]'},
+	  { name: 'Box'			, output: '[box=NAME]\n\n[/box]'},
+	  { name: 'Spoilerbox'	, output: '[spoilerbox][/spoilerbox]'},
+	  { name: 'Quote'		, output: "[quote]\n\n[/quote]"},
+	  { name: 'Code'		, output: '[code]\n\n[/code]'},
+	  { name: 'Center'		, output: '[centre][/centre]'},
+	  { name: 'URL'			, output: '[url=URL][/url]'},
+	  { name: 'Profile'		, output: '[profile=USERID]username[/profile]'},
+	  { name: 'List'		, output: '[list]\n[*]\n[*]\n[/list]'},
+	  { name: 'Email'		, output: '[email=ADDRESS][/email]'},
+	  { name: 'Images'		, output: '[img]URL[/img]'},
+	  { name: 'Youtube'		, output: '[youtube]VIDEO ID[/youtube]'},
+	  { name: 'Audio'		, output: '[audio]URL[/audio]'},
+	  { name: 'Heading'		, output: '[heading][/heading]'},
+	  { name: 'Notice'		, output: '[notice]\n\n[/notice]'},
+	];
+
+	// Create a container div for the buttons
+	const buttonContainer = document.createElement('div');
+	buttonContainer.style.display = 'grid';
+	buttonContainer.style.gridTemplateColumns = 'repeat(7, 1fr)';
+	buttonContainer.style.gap = '5px';
+
+// Create buttons using the buttonData array and append them to the container
+	buttonData.forEach(data => {
+	  const button = document.createElement('button');
+	  button.textContent = data.name;
+	  button.addEventListener('click', () => {
+	  const startPos = userInput.selectionStart;
+	  const endPos = userInput.selectionEnd;
+	  userInput.value = userInput.value.substring(0, startPos) + data.output + userInput.value.substring(endPos, userInput.value.length);
+	  userInput.selectionStart = startPos + data.output.length;
+	  userInput.selectionEnd = startPos + data.output.length;
+	  update_html_page()
+	  });
+	  buttonContainer.appendChild(button);
+	});
+
+
+	// Append the button container to the HTML document
+	document.body.insertBefore(buttonContainer, userInput);
+	</script>
+</body>
+</html>
+
