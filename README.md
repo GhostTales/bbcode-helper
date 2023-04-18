@@ -1,4 +1,4 @@
-# bbcode-editor
+## bbcode-editor
 
 This is a program designed to help people make BBcode easy.
 The code was origionally made for a game called osu! as for the custom bbcode built in.
@@ -11,6 +11,8 @@ ________________________________________________________________________________
 For non osu! users use of the editor only is recommended as the HTML page is made to look and act as the osu profile page
 
 ________________________________________________________________________________________________________________________
+## web port
 
 For use of the simple web port go to the following site:
+
 https://ghosttales.github.io/bbcode-helper/bbcode%20editor.html
