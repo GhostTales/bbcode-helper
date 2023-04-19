@@ -72,13 +72,16 @@ class editor(customtkinter.CTk):
         self.textbox.bind("<KeyRelease>", on_key_released)
 
         # Define functions for applying bbcode formatting to selected text
-        def insert_bbcode(tag, has_option=False, multiline=False):
+        def insert_bbcode(tag, has_option=False, multiline=False, points=False):
             index = self.textbox.index(tkinter.INSERT)
             option = f"={tag.upper()}" if has_option else ""
-            content = f"\n\n" if multiline else " "
-            self.textbox.insert(index, f"[{tag}{option}]{content}[/{tag}]")
+            content = f"\n\n" if multiline else ""
+            list = f"\n[*]\n[*]\n" if points else ""
+            self.textbox.insert(index, f"[{tag}{option}]{list}{content}[/{tag}]")
             if multiline:
                 self.textbox.mark_set("insert", "%d.0" % (int(index.split(".")[0]) + 1))
+            elif points:
+                self.textbox.mark_set("insert", "%d.%d" % (int(index.split(".")[0]) + 1, int(index.split(".")[1]) + 3))
             else:
                 self.textbox.mark_set("insert", "%d.%d" % (int(index.split(".")[0]), int(index.split(".")[1]) + len(f"[{tag}{option}]")))
             update_line_numbers()
@@ -103,7 +106,7 @@ class editor(customtkinter.CTk):
         self.URL = customtkinter.CTkButton(master=self, width=width, text="URL", command=lambda: insert_bbcode("url", has_option=True)).grid(row=2, column=6, padx=padx, pady=pady)
         self.Profile = customtkinter.CTkButton(master=self, width=width, text="Profile", command=lambda: insert_bbcode("profile", has_option=True)).grid(row=2, column=7, padx=(padx, padx * 2), pady=pady)
 
-        self.List = customtkinter.CTkButton(master=self, width=width, text="List", command=lambda: insert_bbcode("list", multiline=True)).grid(row=3, column=1, padx=(padx * 2, padx), pady=(pady, pady * 2))
+        self.List = customtkinter.CTkButton(master=self, width=width, text="List", command=lambda: insert_bbcode("list", points=True)).grid(row=3, column=1, padx=(padx * 2, padx), pady=(pady, pady * 2))
         self.Email = customtkinter.CTkButton(master=self, width=width, text="Email", command=lambda: insert_bbcode("email", has_option=True)).grid(row=3, column=2, padx=padx, pady=(pady, pady * 2))
         self.Images = customtkinter.CTkButton(master=self, width=width, text="Images", command=lambda: insert_bbcode("img")).grid(row=3, column=3, padx=padx, pady=(pady, pady * 2))
         self.Youtube = customtkinter.CTkButton(master=self, width=width, text="Youtube", command=lambda: insert_bbcode("youtube")).grid(row=3, column=4, padx=padx, pady=(pady, pady * 2))
@@ -165,7 +168,6 @@ class editor(customtkinter.CTk):
             end_index = self.textbox.index("end")
             text = self.textbox.get(start_index, end_index)
             # Replace BBcode tags with HTML tags
-            text = re.sub(r"!bbcode ", "", text)
             text = re.sub(r"\[b]", "<strong>", text)
             text = re.sub(r"\[/b]", "</strong>", text)
             text = re.sub(r"\[i]", "<i>", text)
